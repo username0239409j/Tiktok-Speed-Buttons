@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TikTok Speed Buttons
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.3
 // @description  Add speed control buttons to TikTok videos
 // @author       Grok
 // @match        https://www.tiktok.com/*
@@ -88,16 +88,16 @@
     }
 
     // Add to existing action bars
-    document.querySelectorAll('.css-jbg155-5e6d46e3--SectionActionBarContainer').forEach(addSpeedButtons);
+    document.querySelectorAll('[class*="--SectionActionBarContainer"]').forEach(addSpeedButtons);
 
     // Observe for new action bars
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(node) {
                 if (node.nodeType === 1) {
-                    const actionBars = node.querySelectorAll('.css-jbg155-5e6d46e3--SectionActionBarContainer');
+                    const actionBars = node.querySelectorAll('[class*="--SectionActionBarContainer"]');
                     actionBars.forEach(addSpeedButtons);
-                    if (node.classList && node.classList.contains('css-jbg155-5e6d46e3--SectionActionBarContainer')) {
+                    if (node.classList && node.className.includes('--SectionActionBarContainer')) {
                         addSpeedButtons(node);
                     }
                 }
